@@ -2,7 +2,7 @@ package com.linkify.controller;
 
 import com.linkify.model.User;
 import com.linkify.service.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,8 +36,10 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String showProfile(Model model) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String showProfile(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
         User user = userService.findByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
         return "profile";
