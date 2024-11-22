@@ -1,7 +1,7 @@
 package com.linkify.controller;
 
 import com.linkify.model.User;
-import com.linkify.service.UserService;
+import com.linkify.service.impl.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;

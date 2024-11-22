@@ -2,6 +2,7 @@ package com.linkify.service;
 
 import com.linkify.model.User;
 import com.linkify.repository.UserRepository;
+import com.linkify.service.impl.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

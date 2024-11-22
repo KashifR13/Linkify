@@ -1,8 +1,9 @@
-package com.linkify.service;
+package com.linkify.service.impl;
 
 import com.linkify.model.FriendRequest;
 import com.linkify.model.User;
 import com.linkify.repository.FriendRequestRepository;
+import com.linkify.service.IFriendRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

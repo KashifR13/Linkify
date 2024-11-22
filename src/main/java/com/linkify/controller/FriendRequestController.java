@@ -2,8 +2,8 @@ package com.linkify.controller;
 
 import com.linkify.model.FriendRequest;
 import com.linkify.model.User;
-import com.linkify.service.FriendRequestService;
-import com.linkify.service.UserService;
+import com.linkify.service.impl.FriendRequestService;
+import com.linkify.service.impl.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
