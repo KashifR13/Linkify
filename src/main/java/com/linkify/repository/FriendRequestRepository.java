@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long> {
     List<FriendRequest> findByReceiverAndAcceptedFalse(User receiver);
-    List<FriendRequest> findBySenderAndAcceptedFalse(User sender);
+    List<FriendRequest> findBySenderAndAcceptedTrue(User sender);
+    List<FriendRequest> findByReceiverAndAcceptedTrue(User receiver);
 }

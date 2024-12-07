@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FriendRequestService implements IFriendRequestService {
@@ -37,8 +39,27 @@ public class FriendRequestService implements IFriendRequestService {
         friendRequestRepository.save(friendRequest);
     }
 
+    public void rejectFriendRequest(Long requestId) {
+        FriendRequest friendRequest = friendRequestRepository.findById(requestId).orElseThrow();
+        friendRequestRepository.delete(friendRequest);
+    }
+
     @Override
     public List<FriendRequest> getPendingRequests(User user) {
+        return friendRequestRepository.findByReceiverAndAcceptedFalse(user);
+    }
+
+    public List<User> getFriendsList(User user) {
+        List<FriendRequest> sentRequests = friendRequestRepository.findBySenderAndAcceptedTrue(user);
+        List<FriendRequest> receivedRequests = friendRequestRepository.findByReceiverAndAcceptedTrue(user);
+
+        return Stream.concat(
+                sentRequests.stream().map(FriendRequest::getReceiver),
+                receivedRequests.stream().map(FriendRequest::getSender)
+        ).distinct().collect(Collectors.toList());
+    }
+
+    public List<FriendRequest> getPendingFriendRequests(User user) {
         return friendRequestRepository.findByReceiverAndAcceptedFalse(user);
     }
 
