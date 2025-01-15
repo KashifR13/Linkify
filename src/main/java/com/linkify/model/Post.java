@@ -2,6 +2,8 @@ package com.linkify.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -17,6 +19,12 @@ public class Post {
     private String content;
     private String mediaUrl;
     private LocalDateTime createdAt;
+
+    @ManyToMany
+    private List<User> likes = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -56,6 +64,22 @@ public class Post {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<User> getLikes() {
+        return likes;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setLikes(List<User> likes) {
+        this.likes = likes;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
 }
