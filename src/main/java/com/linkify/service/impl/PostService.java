@@ -1,5 +1,6 @@
 package com.linkify.service.impl;
 
+import com.linkify.model.Comment;
 import com.linkify.model.Post;
 import com.linkify.model.User;
 import com.linkify.repository.PostRepository;
@@ -34,4 +35,24 @@ public class PostService implements IPostService {
     public List<Post> getNewsFeed(List<User> friends) {
         return postRepository.findByAuthorInOrderByCreatedAtDesc(friends);
     }
+
+    @Override
+    public void likePost(Long postId, User user) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+        post.getLikes().add(user);
+        postRepository.save(post);
+    }
+
+    @Override
+    public void commentOnPost(Long postId, User user, String comment) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+        post.getComments().add(new Comment(user, comment, LocalDateTime.now()));
+        postRepository.save(post);
+    }
+
+    @Override
+    public List<Post> getPostsByUser(User user) {
+        return postRepository.findByAuthorInOrderByCreatedAtDesc(List.of(user));
+    }
+
 }

@@ -38,4 +38,23 @@ public class PostController {
         List<User> friends = friendRequestService.getFriendsList(user);
         return postService.getNewsFeed(friends);
     }
+
+    @PostMapping("/{postId}/like")
+    public void likePost(Principal principal, @PathVariable Long postId) {
+        User user = userService.findByUsername(principal.getName());
+        postService.likePost(postId, user);
+    }
+
+    @PostMapping("/{postId}/comment")
+    public void commentOnPost(Principal principal, @PathVariable Long postId, @RequestBody String comment) {
+        User user = userService.findByUsername(principal.getName());
+        postService.commentOnPost(postId, user, comment);
+    }
+
+    @GetMapping("/user/{username}")
+    public List<Post> getPostsByUser(@PathVariable String username) {
+        User user = userService.findByUsername(username);
+        return postService.getPostsByUser(user);
+    }
+
 }
